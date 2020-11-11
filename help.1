@@ -1,14 +1,13 @@
 .\" Manpage for timemachine.
 .\" Contact dtrajkovic@solution-soft.com to correct errors or typos.
-.TH man 8 "21 November 2018" "1.1" "time machine man page"
+.TH man 8 "11 November 2020" "1.1" "time machine man page"
 .SH SYNOPSIS
-To create a virtual clock /etc/ssstm/tmuser -a -u tester1 -D 5  # this adds a virtual clock for the user tester1 that is 5 days in the future
+To create a virtual clock /opt/ssstm/bin/tmuser -a -G -y 5  # this adds a virtual clock for the whole pod that is 5 years in the future
 .SH DESCRIPTION
-Time Machine lets you create virtual clocks for time shift testing. The software is installed in the container at /etc/ssstm. 
-When you get the image run with this command: docker run -i --privileged --cap-add=ALL --user=root -t <image>:<tag> and then install the Time Machine RPM.
+Time Machine lets you create virtual clocks for time shift testing. The software is installed in the container at /opt/ssstm. 
 
-For install instructions see ftp://ftp.solution-soft.com/pub/tm/linux/redhat/64bit/tmreadme.txt 
+ 
 .SH BUGS
 No known bugs.
 .SH AUTHOR
-Dragan Trajkovic (dtrajkovic@solution-soft.com)
+Ken Zhao (kzhao@solution-soft.com)
