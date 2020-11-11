@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 set -u
@@ -8,20 +8,17 @@ function populate() {
     WORKD=${1:-/opt/ssstm}
     DIST="/dist"
 
-    rm -rf $WORKD/*
-    mkdir -p $WORKD
+    sudo mkdir -p $WORKD && sudo rm -rf $WORKD/* && sudo chown `id -u`:`id -g` $WORKD
 
     # populate rhat lib structure
     mkdir -p $WORKD/lib $WORKD/lib64
-
-    install -o root -g root -m 0555 $DIST/lib32/libssstm.so $WORKD/lib
-    install -o root -g root -m 0555 $DIST/lib64/libssstm.so $WORKD/lib64
+    install -m 0555 $DIST/lib32/libssstm.so $WORKD/lib
+    install -m 0555 $DIST/lib64/libssstm.so $WORKD/lib64
 
     # populate debian lib structure
     mkdir -p $WORKD/lib32 $WORKD/lib/x86_64-linux-gnu
-
-    install -o root -g root -m 0555 $DIST/lib32/libssstm.so $WORKD/lib32
-    install -o root -g root -m 0555 $DIST/lib64/libssstm.so $WORKD/lib/x86_64-linux-gnu
+    install -m 0555 $DIST/lib32/libssstm.so $WORKD/lib32
+    install -m 0555 $DIST/lib64/libssstm.so $WORKD/lib/x86_64-linux-gnu
 
     # setup environment
     mkdir -p $WORKD/etc
@@ -29,13 +26,14 @@ function populate() {
 
     # populate TM daemon
     mkdir -p $WORKD/sbin
-
-    install -o root -g root -m 0555 $DIST/sbin/tmdaemon $WORKD/sbin
+    install -m 0555 $DIST/sbin/tmdaemon $WORKD/sbin
 
     # populare TM user client
     mkdir -p $WORKD/bin
+    install -m 0555 $DIST/bin/tmuser $WORKD/bin
 
-    install -o root -g root -m 0555 $DIST/bin/tmuser $WORKD/bin
+    # change ownership to root
+    sudo chown -R root:root $WORKD
 }
 
 populate "/opt/ssstm"
