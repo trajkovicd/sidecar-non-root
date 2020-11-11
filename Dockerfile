@@ -1,5 +1,11 @@
 FROM debian:stable-slim
 
+LABEL name="Solution-Soft/Time Machine" vendor="SolutionSoft Systems Inc" version="1.1" release="1" summary="Time Machine Sidecar Container" description="Time Machine creates virtual clocks for time shift testing of Applications" url="https://solution-soft.com" maintainer="Ken Zhao - SolutionSoft Systems Inc."
+
+COPY help.1 /
+RUN mkdir -p "/licenses"
+COPY licenses /licenses
+
 ENV TINI_VERSION v0.19.0
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
