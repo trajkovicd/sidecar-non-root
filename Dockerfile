@@ -14,8 +14,7 @@ LABEL name="Solution-Soft/Time Machine Sidecar for Kubernetes" \
       maintainer="kzhao@solution-soft.com"
 
 COPY help.1 /
-RUN mkdir -p "/licenses"
-COPY licenses /licenses
+COPY licenses /licenses/
 
 ARG TINI_VERSION=v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
@@ -31,6 +30,8 @@ RUN chown root:root /tini && chmod +x /tini \
 &&  useradd -g 0 default \
 &&  echo "default	 ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/99-default-user
 
+EXPOSE 7800
+
 USER default
 
 STOPSIGNAL SIGTERM
@@ -39,7 +40,5 @@ HEALTHCHECK \
     --start-period=5m \
     --interval=5m \ 
     CMD ping -c 1 localhost || exit 1
-
-EXPOSE 7800
 
 ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
